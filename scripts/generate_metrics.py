@@ -1,13 +1,5 @@
-from pathlib import Path
-from datetime import datetime
-
-root = Path(__file__).resolve().parents[1]
-out = root / "docs" / "metrics" / "hello.txt"
-out.parent.mkdir(parents=True, exist_ok=True)
-out.write_text(f"hello {datetime.now().isoformat()}\n", encoding="utf-8")
-print("WROTE", out)
-
 from __future__ import annotations
+
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -31,8 +23,7 @@ def main() -> None:
                 "p95_latency_ms": round(random.uniform(60, 180), 2),
                 "error_rate_pct": round(random.uniform(0.0, 2.0), 3),
             },
-        },
-        "notes": "Synthetic metrics snapshot. Replace with real queries when Prometheus is wired."
+        }
     }
 
     OUT.write_text(json.dumps(payload, indent=2), encoding="utf-8")
