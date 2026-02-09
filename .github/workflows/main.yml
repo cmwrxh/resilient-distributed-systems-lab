@@ -13,21 +13,46 @@ jobs:
   report:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Needed for git commit history if your scripts use it
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Generate metrics + daily report
+      - name: Install dependencies (if you have any)
         run: |
-          python scripts/generate_metrics.py
-          python scripts/generate_daily_report.py
+          python -m pip install --upgrade pip
+          # Uncomment and adjust if you need packages:
+          # pip install requests pandas numpy  # example
 
-      - name: Commit changes (if any)
+      - name: List files for debugging
+        run: |
+          ls -la scripts/
+          pwd
+
+      - name: Generate metrics
+        run: python scripts/generate_metrics.py
+        # Note: If this fails → workflow stops here (good for now)
+
+      - name: Generate daily report
+        run: python scripts/generate_daily_report.py
+
+      - name: Commit and push changes (if any were made)
         run: |
           git config user.name "cmwrxh-bot"
           git config user.email "cmwrxh-bot@users.noreply.github.com"
+          
+          # Stage all changes (new files, modified files)
           git add -A
-          git diff --cached --quiet || git commit -m "daily reliability simulation report"
-          git push
+          
+          # Only commit if there are actual changes
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update daily reliability simulation report [$(date +'%Y-%m-%d')]"
+            git push origin HEAD:main
+          else
+            echo "No changes to commit"
+          fi
