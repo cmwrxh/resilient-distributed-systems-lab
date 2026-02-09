@@ -1,3 +1,12 @@
+from pathlib import Path
+from datetime import datetime
+
+root = Path(__file__).resolve().parents[1]
+out = root / "docs" / "metrics" / "hello.txt"
+out.parent.mkdir(parents=True, exist_ok=True)
+out.write_text(f"hello {datetime.now().isoformat()}\n", encoding="utf-8")
+print("WROTE", out)
+
 from __future__ import annotations
 import json
 from datetime import datetime, timezone
