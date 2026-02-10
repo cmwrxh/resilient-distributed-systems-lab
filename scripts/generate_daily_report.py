@@ -28,3 +28,6 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+## Evidence
+- Metrics file: docs/metrics/metrics.json
+- Workflow: Daily Reliability Report (GitHub Actions)
