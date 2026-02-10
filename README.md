@@ -11,38 +11,5 @@ A runnable lab for practicing reliability patterns: retries, idempotency, failur
 
 ## Quickstart (Local)
 ```bash
-cd infra
-docker compose up --build
-```resilient-distributed-systems-lab/
-├─ README.md
-├─ architecture/
-│  ├─ diagrams/
-│  ├─ adr/
-│  │  ├─ 0001-service-boundaries.md
-│  │  ├─ 0002-retry-policy.md
-│  │  └─ 0003-idempotency.md
-│  └─ threat-model.md
-├─ services/
-│  ├─ api-gateway/
-│  ├─ user-service/
-│  ├─ payments-service/
-│  └─ notifications-service/
-├─ infra/
-│  ├─ docker-compose.yml
-│  ├─ nginx/
-│  ├─ prometheus/
-│  └─ grafana/
-├─ chaos/
-│  ├─ kill_service.sh
-│  ├─ latency_injector.sh
-│  └─ packet_loss.sh
-├─ tests/
-│  ├─ load/
-│  ├─ resilience/
-│  └─ contract/
-├─ runbooks/
-│  ├─ incident-response.md
-│  ├─ rollout-canary.md
-│  └─ rollback.md
-└─ postmortems/
-   └─ 0001-simulated-outage.md
+
+  
