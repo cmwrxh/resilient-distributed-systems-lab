@@ -1,0 +1,34 @@
+name: Weekly Chaos Experiment
+
+on:
+  schedule:
+    # Mondays 09:20 Nairobi (UTC+3) = 06:20 UTC
+    - cron: "20 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  chaos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Generate weekly chaos report
+        run: |
+          python scripts/generate_weekly_chaos_report.py
+
+      - name: Commit changes (if any)
+        run: |
+          git config user.name "cmwrxh-bot"
+          git config user.email "cmwrxh-bot@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "weekly chaos experiment results"
+          git push
